@@ -113,6 +113,7 @@ var NPCTalkTaskCondition = (function () {
 egret.registerClass(NPCTalkTaskCondition,'NPCTalkTaskCondition',["TaskCondition"]);
 var KillMonsterTaskCondition = (function () {
     function KillMonsterTaskCondition() {
+        this.MonsterList = {};
     }
     var d = __define,c=KillMonsterTaskCondition,p=c.prototype;
     p.onAccept = function (task) { };

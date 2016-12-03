@@ -27,6 +27,23 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+var Cache: MethodDecorator = (target,propertyKey,descriptor) => {
+    const method = descriptor.value;
+    descriptor.value = function(...arg){
+        console.log(target,propertyKey)
+        var cacheKey = "__cache" + propertyKey;
+        if(target[cacheKey]){
+            return target[cacheKey];
+        }
+        else{
+            target[cacheKey] = method.apply(this,arg);
+            return target[cacheKey];
+        }
+    }
+}
+
+
+
 class Main extends egret.DisplayObjectContainer {
 
     /**

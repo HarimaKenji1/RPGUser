@@ -27,20 +27,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-var Cache: MethodDecorator = (target,propertyKey,descriptor) => {
-    const method = descriptor.value;
-    descriptor.value = function(...arg){
-        console.log(target,propertyKey)
-        var cacheKey = "__cache" + propertyKey;
-        if(target[cacheKey]){
-            return target[cacheKey];
-        }
-        else{
-            target[cacheKey] = method.apply(this,arg);
-            return target[cacheKey];
-        }
-    }
-}
+
 
 
 
@@ -178,6 +165,13 @@ class Main extends egret.DisplayObjectContainer {
     private dialoguePanel : DialoguePanel; 
     private screenService :ScreenService;
 
+    private user : User ;
+    private hero : Hero;
+    private sword : Weapon;
+    private helment : Armor;
+    private weaponJewel : Jewel;
+    private armorJewel : Jewel;
+
     
     /**
      * 创建游戏场景
@@ -257,6 +251,33 @@ class Main extends egret.DisplayObjectContainer {
          //this.map01.setEndTile(2,1);
 
          this.astar = new AStar();
+
+         this.user = new User("Player01",1);
+         this.hero = new Hero("Hero01",Quality.WHITE,1);
+         this.sword = new Weapon("sword",Quality.WHITE,WeaponType.HANDSWORD);
+         this.helment = new Armor("helment",Quality.WHITE,ArmorType.LIGHTARMOR);
+         this.weaponJewel = new Jewel(Quality.WHITE);
+         this.armorJewel = new Jewel(Quality.WHITE);
+         
+         this.sword.addJewl(this.weaponJewel);
+         this.helment.addJewl(this.armorJewel);
+         this.hero.addWeapon(this.sword);
+         this.hero.addArmor(this.helment);
+         this.user.addHeroInTeam(this.hero);
+         this.user.addHeros(this.hero);
+
+         console.log(this.user.getFightPower());
+         console.log(this.hero.getAttack());
+         console.log(this.hero.getDefence());
+         console.log(this.hero.getAglie());
+         console.log(this.hero.getMaxHP());
+         console.log("weaponJewel fightpower :" + this.weaponJewel.getFightPower());
+         console.log("armorJewel fightpower :" + this.armorJewel.getFightPower());
+         console.log("sword fightpower :" + this.sword.getFightPower());
+         console.log("helment fightpower :" + this.helment.getFightPower());
+         console.log("helment defence :" + this.helment.getDefence());
+         console.log("helment aglie :" + this.helment.getAglie());
+         console.log("hero fightpower :" + this.hero.getFightPower());
 
          
        
